@@ -3,7 +3,7 @@ import sys
 
 from snowball_drawer import SnowballDrawer
 
-lines = [(1, 1), (1, 0), (2, 0), (3, 1)]
+lines = {(1, 1): "n", (1, 0): "j", (2, 0): "n", (3, 1): "n"}
 
 
 class MainManager:

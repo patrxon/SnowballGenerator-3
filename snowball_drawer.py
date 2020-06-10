@@ -1,12 +1,5 @@
 import pygame as pg
-
-
-def add_up(tuple_a, tuple_b):
-    return tuple(map(sum, zip(tuple_a, tuple_b)))
-
-
-def multiple(tuple_, times):
-    return tuple([times * x for x in tuple_])
+from tuple_operations import calculate_pos
 
 
 class SnowballDrawer:
@@ -23,8 +16,16 @@ class SnowballDrawer:
         color = (100, 100, 100)
         pg.draw.rect(self.win, color, rect)
 
-    def draw_lines(self, offset, line_arr, size=2, color=(0,0,0)):
-        last_pos = offset
+    def draw_lines(self, offset, line_arr, size=2, color=(0, 0, 0)):
+
+        prev_point = offset
         for line in line_arr:
-            pg.draw.line(self.win, color, last_pos, add_up(offset, multiple(line, size)), 2)
-            last_pos = add_up(offset, multiple(line, size))
+            next_point = calculate_pos(offset, line, size)
+
+            if line_arr[line] == "n":
+                pg.draw.line(self.win, color, prev_point, next_point, size // 5)
+            elif line_arr[line] == "j":
+                pg.draw.circle(self.win, color, next_point, size // 5)
+                pg.draw.circle(self.win, color, prev_point, size // 5)
+
+            prev_point = next_point

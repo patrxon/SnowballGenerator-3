@@ -18,14 +18,18 @@ class SnowballDrawer:
 
     def draw_lines(self, offset, line_arr, size=2, color=(0, 0, 0)):
 
-        prev_point = offset
+        prev_point = calculate_pos(offset, list(line_arr)[0], size)
         for line in line_arr:
             next_point = calculate_pos(offset, line, size)
 
-            if line_arr[line] == "n":
-                pg.draw.line(self.win, color, prev_point, next_point, size // 5)
-            elif line_arr[line] == "j":
+            if line_arr[line] == "j":
                 pg.draw.circle(self.win, color, next_point, size // 5)
                 pg.draw.circle(self.win, color, prev_point, size // 5)
+            elif line_arr[line] == "r":
+                pg.draw.line(self.win, color, prev_point, next_point, size // 5)
+            elif line_arr[line] == "l":
+                pg.draw.line(self.win, color, prev_point, next_point, size // 5)
+
 
             prev_point = next_point
+

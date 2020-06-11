@@ -2,9 +2,7 @@ import pygame as pg
 import sys
 
 from snowball_drawer import SnowballDrawer
-
-lines = {(1, 1): "n", (1, 0): "j", (2, 0): "n", (3, 1): "n"}
-
+from line_manager import LineManager
 
 class MainManager:
     def __init__(self, fps, size):
@@ -14,6 +12,13 @@ class MainManager:
         self.fps = fps
 
         self.sbDrawer = SnowballDrawer(100, 100, 1080, 520, self.win)
+        self.lnManager = LineManager()
+
+        self.lnManager.add_line((0, 0), (0, 1), ["l", "r", "r", "r", "r", "r"])
+        self.lnManager.add_line((4, 4), (4, 5), ["l", "r", "r", "r", "r", "r", "r"])
+        self.lnManager.add_line((8, 8), (8, 7), ["r", "l", "l", "l", "l", "l"])
+        self.lnManager.add_line((-4, 4), (-5, 5), ["r", "l", "l", "l", "l", "l"])
+        self.lines = self.lnManager.get_lines()
 
         self.work_loop()
 
@@ -25,13 +30,15 @@ class MainManager:
             self.events()
             self.update()
             clock.tick(self.fps)
+            clock.tick(60)
 
     def update(self):
-        pass
+        self.lnManager.iterate_lines()
 
     def display(self):
         self.sbDrawer.draw_box()
-        self.sbDrawer.draw_lines((500, 500), lines, 10)
+        for line in self.lines:
+            self.sbDrawer.draw_lines((600, 400), line, 10)
         pg.display.flip()
 
     def events(self):

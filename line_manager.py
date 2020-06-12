@@ -1,5 +1,5 @@
 from line_generator import LineGenerator
-from line_tester import LineTester
+from line_validator import LineTester
 
 
 class LineManager():

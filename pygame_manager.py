@@ -10,11 +10,10 @@ import constants as cns
 
 
 class MainManager:
-    def __init__(self, fps, size):
+    def __init__(self, size):
         pg.init()
         self.size = size
         self.win = pg.display.set_mode(self.size)
-        self.fps = fps
 
         self.sbDrawer = SnowballDrawer(cns.DRAW_BOX_SIZE_MID, self.win)
         self.hudDrawer = HudDrawer(cns.DRAW_BOX_SIZE_MID, self.win)
@@ -34,19 +33,11 @@ class MainManager:
         self.change = False
         self.line_size = 5
         self.sbDrawer.draw_bg_box()
-        self.work_loop()
-
-    def work_loop(self):
-        clock = pg.time.Clock()
-
-        while True:
-            self.display()
-            self.events()
-            self.update()
-            clock.tick(self.fps)
 
     def update(self):
         self.lnManager.iterate_lines()
+
+        self.events()
 
     def display(self):
 
@@ -78,3 +69,5 @@ class MainManager:
                     self.line_size += 1
                 elif event.button == 5:
                     self.line_size -= 1
+
+                self.sbDrawer.refresh_draw()

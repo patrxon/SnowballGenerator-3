@@ -9,19 +9,26 @@ class SnowballDrawer:
         self.pos_y = sizes[1]
         self.width = sizes[2]
         self.height = sizes[3]
+        self.offset = (500, 500)
+        self.line_size = 5
         self.refresh = False
         self.win = win
 
-    def draw_snowball(self, offset, line_arr, size=2, colors=([255, 0, 0], [0, 0, 255], [0, 255, 0])):
+    def change_camera_position(self, new_offset, new_size):
+        self.offset = new_offset
+        self.line_size = new_size
+        self.refresh_draw()
+
+    def draw_snowball(self, line_arr, colors=([255, 0, 0], [0, 0, 255], [0, 255, 0])):
 
         if self.refresh:
             self.draw_bg_box()
             for line in line_arr:
-                self.draw_lines(offset, line, size, colors)
+                self.draw_lines(line, colors)
             self.refresh = False
         else:
             for line in line_arr:
-                self.draw_segments(offset, line, size, colors)
+                self.draw_segments(line, colors)
 
     def refresh_draw(self):
         self.refresh = True
@@ -31,36 +38,36 @@ class SnowballDrawer:
         color = (100, 100, 100)
         pg.draw.rect(self.win, color, rect)
 
-    def draw_lines(self, offset, line_arr, size, colors):
-        line_width = size // 5
+    def draw_lines(self, line_arr, colors):
+        line_width = self.line_size // 5
         if line_width <= 0:
             line_width = 1
 
-        prev_point = calculate_pos(offset, list(line_arr)[0], size)
+        prev_point = calculate_pos(self.offset, line_arr[0][0], self.line_size)
         for line in line_arr:
-            next_point = calculate_pos(offset, line, size)
-            move = line_arr[line]
+            next_point = calculate_pos(self.offset, line[0], self.line_size)
+            move = line[1]
 
             self.draw_line(next_point, prev_point, line_width, move, colors)
 
             prev_point = next_point
 
-    def draw_segments(self, offset, line_arr, size, colors):
-        line_width = size // 5
+    def draw_segments(self, line_arr, colors):
+
+        line_width = self.line_size // 5
         if line_width <= 0:
             line_width = 1
 
-        prev_point = calculate_pos(offset, list(line_arr)[len(line_arr) - 2], size)
-        next_point = calculate_pos(offset, list(line_arr)[len(line_arr) - 1], size)
-        move = line_arr[list(line_arr)[len(line_arr) - 1]]
+        prev_point = calculate_pos(self.offset, line_arr[-2][0], self.line_size)
+        next_point = calculate_pos(self.offset, line_arr[-1][0], self.line_size)
+        move = line_arr[-1][1]
 
         self.draw_line(next_point, prev_point, line_width, move, colors)
 
     def draw_line(self, next_point, prev_point, line_width, move, colors):
 
         if move == "j":
-            pg.draw.circle(self.win, colors[0], next_point, line_width)
-            pg.draw.circle(self.win, colors[0], prev_point, line_width)
+            pg.draw.line(self.win, colors[0], prev_point, next_point, line_width)
         elif move == "r":
             pg.draw.line(self.win, colors[1], prev_point, next_point, line_width)
         elif move == "l":

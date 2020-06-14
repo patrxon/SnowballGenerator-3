@@ -12,16 +12,13 @@ class LineGenerator:
     def generate_right(self, prev_point, point):
         dir_ = dir_dict[subtract(prev_point, point)]
 
-        for i in range(7):
+        for i in range(8):
             dir_ -= 1
             if dir_ < 0:
                 dir_ = 7
 
             next_point = add_up(point, directions[dir_])
             if self.lt.check_normal_line(point, next_point):
-                self.lt.add_line(point, next_point)
-                self.lt.add_point(next_point)
-
                 return next_point
 
         return False
@@ -29,16 +26,27 @@ class LineGenerator:
     def generate_left(self, prev_point, point):
         dir_ = dir_dict[subtract(prev_point, point)]
 
-        for i in range(7):
+        for i in range(8):
             dir_ += 1
             if dir_ > 7:
                 dir_ = 0
 
             next_point = add_up(point, directions[dir_])
             if self.lt.check_normal_line(point, next_point):
-                self.lt.add_line(point, next_point)
-                self.lt.add_point(next_point)
                 return next_point
+
+        return False
+
+    def generate_jump(self, prev_point, point):
+        dir_ = dir_dict[subtract(prev_point, point)]
+
+        dir_ += 4
+        if dir_ > 7:
+            dir_ -= 8
+
+        next_point = add_up(point, directions[dir_])
+        if self.lt.check_jump_line(next_point):
+            return next_point
 
         return False
 
@@ -47,3 +55,5 @@ class LineGenerator:
             return self.generate_left(prev_point, point)
         elif move == "r":
             return self.generate_right(prev_point, point)
+        elif move == "j":
+            return self.generate_jump(prev_point, point)

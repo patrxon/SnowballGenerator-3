@@ -25,12 +25,16 @@ class LineTester:
 
         return True
 
-    def check_jump_line(self, p1, p2):
-        # TODO
-        return False
+    def check_jump_line(self, p2):
+        if p2 in self.point_dict:
+            return False
+
+        return True
 
     def add_line(self, p1, p2):
-        self.line_dict.add((p1, p2))
+        if (p1, p2) not in self.line_dict:
+            self.line_dict.add((p1, p2))
 
     def add_point(self, pt):
-        self.point_dict.add(pt)
+        if pt not in self.point_dict:
+            self.point_dict.add(pt)

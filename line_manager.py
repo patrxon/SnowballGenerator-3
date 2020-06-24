@@ -14,9 +14,11 @@ class LineManager():
 
         self.counter = 1
         self.iter = 0
+        self.iterate = True
 
-    def change_speed(self, change):
-        self.counter += change
+    def change_speed(self, change, iterate = True):
+        self.counter = change
+        self.iterate = iterate
 
     def add_line(self, start_a, start_b, pattern):
         self.lines.append([[start_a, "r"], [start_b, "r"]])
@@ -34,7 +36,7 @@ class LineManager():
     def iterate_lines(self):
 
         self.iter += 1
-        if self.iter >= self.counter:
+        if self.iter >= self.counter and self.iterate:
             self.iter = 0
             for i in range(len(self.lines)):
                 move = self.patterns[i][self.pointer[i]]

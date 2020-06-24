@@ -22,5 +22,9 @@ def multiple(tuple_, size):
     return tuple([size * x for x in tuple_])
 
 
+def divide(tuple_, size):
+    return tuple([int(x / size) for x in tuple_])
+
+
 def calculate_pos(tuple_a, tuple_b, size):
     return add_up(tuple_a, multiple(flip(tuple_b, second=True), size))

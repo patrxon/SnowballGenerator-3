@@ -4,6 +4,7 @@ import sys
 from snowball_drawer import SnowballDrawer
 from line_manager import LineManager
 from camera_position_controller import CameraPositionController
+from simulation_speed_controller import SimulationSpeedController
 from sequence_translator import translate_sequence
 from hud_drawer import HudDrawer
 import constants as cns
@@ -17,9 +18,10 @@ class MainManager:
 
         self.sbDrawer = SnowballDrawer(cns.DRAW_BOX_SIZE_MID, self.win)
         self.hudDrawer = HudDrawer(cns.DRAW_BOX_SIZE_MID, self.win)
-        self.cameraController = CameraPositionController(self.sbDrawer)
-
         self.lnManager = LineManager()
+
+        self.cameraController = CameraPositionController(self.sbDrawer)
+        self.simulationController = SimulationSpeedController(self.lnManager, self.hudDrawer)
 
         seq = [("j", 12), ("r", 2), ("l", 2)]
         tseq = translate_sequence(seq)
@@ -37,7 +39,7 @@ class MainManager:
     def display(self):
 
         self.sbDrawer.draw_snowball(self.lines)
-        self.hudDrawer.draw_outer_box()
+        self.hudDrawer.draw_hud()
 
         pg.display.flip()
 
@@ -47,3 +49,4 @@ class MainManager:
                 sys.exit()
 
             self.cameraController.check_event(event)
+            self.simulationController.check_event(event)

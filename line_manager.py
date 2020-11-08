@@ -8,6 +8,11 @@ class LineManager():
         self.line_validator = LineTester()
         self.line_generator = LineGenerator(self.line_validator)
 
+        self.restart_lines()
+
+    def restart_lines(self):
+        self.line_validator.restart_dict()
+
         self.lines = []
         self.patterns = []
         self.pointer = []

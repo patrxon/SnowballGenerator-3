@@ -21,11 +21,11 @@ class SimulationSpeedController:
     def check_event(self, event):
 
         if event.type == pg.KEYDOWN:
-            if event.key == 276:
+            if event.key == pg.K_PERIOD:
                 self.game_speed -= 1
-            elif event.key == 275:
+            elif event.key == pg.K_COMMA:
                 self.game_speed += 1
-            elif event.key == 32:
+            elif event.key == pg.K_p:
                 self.iterate = not self.iterate
 
         self.updated_speed()

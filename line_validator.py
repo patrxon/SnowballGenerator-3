@@ -9,6 +9,9 @@ test_points = [[(0, 1), (0, -1)],
 class LineTester:
 
     def __init__(self):
+        self.restart_dict()
+
+    def restart_dict(self):
         self.point_dict = set({})
         self.line_dict = set({})
 

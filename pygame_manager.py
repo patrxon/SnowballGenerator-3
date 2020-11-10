@@ -5,7 +5,7 @@ from snowball_drawer import SnowballDrawer
 from line_manager import LineManager
 from camera_position_controller import CameraPositionController
 from simulation_speed_controller import SimulationSpeedController
-from sequence_translator import translate_sequence
+from sequence_translator import split_sequence
 from hud_drawer import HudDrawer
 from text_box import InputBox
 
@@ -25,24 +25,19 @@ class MainManager:
         self.cameraController = CameraPositionController(self.sbDrawer)
         self.simulationController = SimulationSpeedController(self.lnManager, self.hudDrawer)
 
-        self.inputBox = InputBox(100, 5, 500, 32)
+        self.inputBox = InputBox(100, 5, 200, 32)
 
-        self.restart_simulation("r 1")
+        self.restart_simulation("00007r1")
 
         self.sbDrawer.draw_bg_box()
 
     def restart_simulation(self, text):
 
-        tab = text.split(' ')
-        seq = []
-
-        for i in range(int(len(tab) / 2)):
-            seq += [(tab[2 * i], int(tab[2 * i + 1]))]
-
-        tseq = translate_sequence(seq)
-
         self.lnManager.restart_lines()
-        self.lnManager.add_line((0, 0), (0, 1), tseq)
+
+        seqs = split_sequence(text)
+        for seq in seqs:
+            self.lnManager.add_line(seq[0], seq[1], seq[2])
 
         self.lines = self.lnManager.get_lines()
 
@@ -65,6 +60,7 @@ class MainManager:
                 if event.key == pg.K_RETURN:
                     new_patter = self.inputBox.get_text()
                     self.restart_simulation(new_patter)
+                    self.sbDrawer.refresh_draw()
 
             self.inputBox.handle_event(event)
             self.cameraController.check_event(event)

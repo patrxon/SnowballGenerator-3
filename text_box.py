@@ -1,6 +1,6 @@
 import pygame as pg
 
-input_list = "jlr/0123456789"
+input_list = "jlrg/0123456789"
 
 
 class InputBox:
@@ -15,6 +15,8 @@ class InputBox:
         self.txt_surface = self.font.render(text, True, self.color)
         self.color = color
         self.selected = -1
+        self.hold = False
+        self.event = ''
 
     def update_pointer(self):
 
@@ -39,21 +41,27 @@ class InputBox:
     def handle_event(self, event):
 
         if event.type == pg.KEYDOWN:
+            self.event = event.key
+            self.hold = True
             if event.key == pg.K_BACKSPACE:
-                self.text = self.text[0:self.selected] + self.text[self.selected+1:]
+                self.text = self.text[0:self.selected] + self.text[self.selected + 1:]
                 if self.selected > -1:
                     self.selected -= 1
             elif event.key == pg.K_LEFT:
                 self.change_select(-1)
             elif event.key == pg.K_RIGHT:
                 self.change_select(1)
+            elif event.key == pg.K_UP:
+                self.change_select(5)
+            elif event.key == pg.K_DOWN:
+                self.change_select(-5)
             elif event.key == pg.K_ESCAPE:
                 self.text = ""
                 self.selected = -1
             elif event.key == pg.K_c:
                 self.text += self.text
             elif pg.key.name(event.key) in input_list:
-                self.text = self.text[0:self.selected+1] + event.unicode + self.text[self.selected+1:]
+                self.text = self.text[0:self.selected + 1] + event.unicode + self.text[self.selected + 1:]
                 self.selected += 1
 
             if len(self.text) > 0:
@@ -61,6 +69,9 @@ class InputBox:
 
             self.txt_surface = self.font.render(self.text, True, self.color)
             self.update()
+
+        if event.type == pg.KEYUP:
+            self.hold = False
 
     def get_text(self):
         return self.text

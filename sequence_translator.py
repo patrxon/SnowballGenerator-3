@@ -3,7 +3,7 @@ import tuple_operations as tp
 dirs = [(1, 1), (1, 0), (1, -1), (0, -1),
         (-1, -1), (-1, 0), (-1, 1), (0, 1)]
 
-moves = ['r', 'l', 'j']
+moves = ['r', 'l', 'j', 'g']
 
 
 def split_sequence(string):

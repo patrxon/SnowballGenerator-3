@@ -21,7 +21,7 @@ class LineManager():
         self.iter = 0
         self.iterate = True
 
-    def change_speed(self, change, iterate = True):
+    def change_speed(self, change, iterate=True):
         self.counter = change
         self.iterate = iterate
 
@@ -45,6 +45,13 @@ class LineManager():
             self.iter = 0
             for i in range(len(self.lines)):
                 move = self.patterns[i][self.pointer[i]]
+
+                while move == 'g':
+                    move = self.patterns[i][self.pointer[i] + 1]
+                    self.patterns[i].insert(self.pointer[i], self.patterns[i][self.pointer[i]+1])
+
+                    self.pointer[i] += 2
+
                 self.pointer[i] += 1
                 if self.pointer[i] >= len(self.patterns[i]):
                     self.pointer[i] = 0

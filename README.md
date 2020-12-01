@@ -12,7 +12,7 @@ l - make left turn.
 r  - make right turn.  
 j - make straight pass through line.  
 g - make copy of next command in sequence.  
-/ - start new line.  
+/ - start new sub-sequence.  
 
 ## Example sequence:
 00000r1 - start position x:00, y:00, first line direction: top-right(0),  r1 - make one turn right.  

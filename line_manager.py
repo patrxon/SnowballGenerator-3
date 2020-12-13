@@ -48,7 +48,8 @@ class LineManager():
 
                 while move == 'g':
                     move = self.patterns[i][self.pointer[i] + 1]
-                    self.patterns[i].insert(self.pointer[i], self.patterns[i][self.pointer[i]+1])
+                    self.patterns[i].insert(
+                        self.pointer[i], self.patterns[i][self.pointer[i]+1])
 
                     self.pointer[i] += 2
 
@@ -58,7 +59,8 @@ class LineManager():
 
                 prev_point = self.lines[i][-2][0]
                 curr_point = self.lines[i][-1][0]
-                next_point = self.line_generator.generate_line(prev_point, curr_point, move)
+                next_point = self.line_generator.generate_line(
+                    prev_point, curr_point, move)
 
                 if next_point:
                     self.lines[i].append([next_point, move])

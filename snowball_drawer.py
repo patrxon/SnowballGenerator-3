@@ -58,8 +58,10 @@ class SnowballDrawer:
         if line_width <= 0:
             line_width = 1
 
-        prev_point = calculate_pos(self.offset, line_arr[-2][0], self.line_size)
-        next_point = calculate_pos(self.offset, line_arr[-1][0], self.line_size)
+        prev_point = calculate_pos(
+            self.offset, line_arr[-2][0], self.line_size)
+        next_point = calculate_pos(
+            self.offset, line_arr[-1][0], self.line_size)
         move = line_arr[-1][1]
 
         self.draw_line(next_point, prev_point, line_width, move, colors)
@@ -67,8 +69,11 @@ class SnowballDrawer:
     def draw_line(self, next_point, prev_point, line_width, move, colors):
 
         if move == "j":
-            pg.draw.line(self.win, colors[0], prev_point, next_point, line_width)
+            pg.draw.line(self.win, colors[0],
+                         prev_point, next_point, line_width)
         elif move == "r":
-            pg.draw.line(self.win, colors[1], prev_point, next_point, line_width)
+            pg.draw.line(self.win, colors[1],
+                         prev_point, next_point, line_width)
         elif move == "l":
-            pg.draw.line(self.win, colors[2], prev_point, next_point, line_width)
+            pg.draw.line(self.win, colors[2],
+                         prev_point, next_point, line_width)

@@ -20,8 +20,10 @@ class InputBox:
 
     def update_pointer(self):
 
-        txt_aft = self.font.render(self.text[0:self.selected + 1], True, self.color)
-        txt_pre = self.font.render(self.text[0:self.selected], True, self.color)
+        txt_aft = self.font.render(
+            self.text[0:self.selected + 1], True, self.color)
+        txt_pre = self.font.render(
+            self.text[0:self.selected], True, self.color)
 
         height = txt_aft.get_width()
         height_left = txt_pre.get_width()
@@ -44,7 +46,8 @@ class InputBox:
             self.event = event.key
             self.hold = True
             if event.key == pg.K_BACKSPACE:
-                self.text = self.text[0:self.selected] + self.text[self.selected + 1:]
+                self.text = self.text[0:self.selected] + \
+                    self.text[self.selected + 1:]
                 if self.selected > -1:
                     self.selected -= 1
             elif event.key == pg.K_LEFT:
@@ -61,7 +64,8 @@ class InputBox:
             elif event.key == pg.K_c:
                 self.text += self.text
             elif pg.key.name(event.key) in input_list:
-                self.text = self.text[0:self.selected + 1] + event.unicode + self.text[self.selected + 1:]
+                self.text = self.text[0:self.selected + 1] + \
+                    event.unicode + self.text[self.selected + 1:]
                 self.selected += 1
 
             if len(self.text) > 0:

@@ -13,7 +13,8 @@ def split_sequence(string):
         for seq in string.split('/'):
             temp = []
             temp += [(int(seq[0:2]), int(seq[2:4]))]
-            temp += [tp.add_up((int(seq[0:2]), int(seq[2:4])), dirs[int(seq[4])])]
+            temp += [tp.add_up((int(seq[0:2]), int(seq[2:4])),
+                               dirs[int(seq[4])])]
             pattern = [(seq[5])]
             num = ''
 

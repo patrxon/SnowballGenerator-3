@@ -26,12 +26,12 @@ class CameraPositionController:
         mouse_pos = pg.mouse.get_pos()
 
         diff = subtract(self.offset, mouse_pos)
-        if self.line_size!=0:
+        if self.line_size != 0:
             diff = divide(diff, self.line_size)
             diff = multiple(diff, direction)
 
         self.offset = add_up(self.offset, diff)
-        
+
         self.line_size += direction
         self.sbDrawer.change_camera_position(self.offset, self.line_size)
 
